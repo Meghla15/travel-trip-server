@@ -49,14 +49,25 @@ async function run() {
       res.send(result)
     })
 
-    // app.get('/updatePage/:id', async(res,req) =>{
-    //   const id = req.params.id;
-    //   console.log(id);
-    //   const query = {_id :new ObjectId(id)}
-    //   const result = await addedSpotCollection.findOne(query)
-    //   console.log(result)
-    //   res.send,(result)
-    // })
+    app.put('/updatePage/:id', async(req,res) =>{
+      const query = {_id : new ObjectId (req.params.id)};
+      const data = {
+        $set :{
+          photo:req.body.photo,
+          spotName:req.body.spotName,
+          countryName:req.body.countryName,
+          location:req.body.location,
+          description:req.body.description,
+          travelTime:req.body.travelTime,
+          averageCost:req.body.averageCost,
+          totalVisiter:req.body.totalVisiter,
+          seasonality:req.body.seasonality,
+        }
+      }
+      const result =await addedSpotCollection.updateOne(query,data)
+      console.log(result)
+      res.send(result)
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
